@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
@@ -10,9 +11,10 @@ async function bootstrap() {
     .addTag('app-store-api')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  // Estas lineas cambias para poder generar el yaml para lo de OPEN API
   SwaggerModule.setup('api', app, document, {
     yamlDocumentUrl: 'swagger/yaml',
   });
+
+  await app.listen(3000);
 }
 bootstrap();
